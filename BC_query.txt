@@ -1,0 +1,52 @@
+query selectAllLoanTransactions {
+  description: "Select all transactions based on their customer name"
+  statement:
+      SELECT com.ett.blockchain.Programmeben 
+        WHERE (_$inputcust == benificiary)
+  
+          
+}
+
+query selectTransactionsByCustomerName {
+  description: "Select all transactions based on their customer name"
+  statement:
+      SELECT com.ett.blockchain.Programmeben 
+          WHERE (benificiary CONTAINS (customerid == 'TATA'))
+}
+
+query selectHistorianRecord{
+description: "Select the historian records"
+  statement: 
+  SELECT org.hyperledger.composer.system.HistorianRecord 
+  WHERE (transactionType == 'AddAsset' OR transactionType == 'UpdateAsset')
+}
+
+query selectHistorianRecordAll{
+description: "Select the historian records"
+  statement: 
+  SELECT org.hyperledger.composer.system.HistorianRecord 
+  
+}
+
+query selectHistorianRecordLoanTransactions{
+description: "Select the historian records"
+  statement: 
+  SELECT org.hyperledger.composer.system.HistorianRecord 
+    WHERE (transactionType  == 'com.ett.blockchain.Programmeben')
+  
+}
+
+query selectHistorianRecordLoanAsset{
+description: "Select the historian records"
+  statement: 
+  SELECT org.hyperledger.composer.system.HistorianRecord 
+    WHERE (transactionType  == 'com.ett.blockchain.Bankprogramme' AND transactionType =='AddAsset' )
+  
+}
+
+query selectProgrammeben{
+description: "Select the transaction for beneficiary and program"
+  statement: 
+  SELECT  com.ett.blockchain.Programmeben WHERE (benificiary == _$benificiary AND bankprogramme == _$bankprogram)
+  
+}

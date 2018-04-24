@@ -1,0 +1,43 @@
+namespace  com.ett.blockchain
+
+asset Bankprogramme identified by programmeid {
+    o String programmeid
+    o String bankname
+    --> Bank bank
+    --> Benificiary benificiary
+}
+
+participant Bank identified by bankname {
+    o String bankname
+}
+
+//Beneficiary and Customer are the same
+participant Benificiary identified by customerid {
+    o String customerid
+}
+
+/**
+concept LoanDetails {
+    o Double roi //rate of interest
+    o Long  loanamount
+    o Integer  loantenure   //in days
+    o DateTime  disbdate
+}
+*/
+//This transaction would make a virtual link of Bank,Programme,beneficiary,roi,loanamount,disbdate.
+//equivalent of creating a programme for a or benmeficiary(anchor)
+transaction Programmeben  {
+      
+    --> Bankprogramme bankprogramme
+    --> Benificiary   benificiary //programmeto beneficiary linking
+    // o LoanDetails loandetails
+    o Double roi //rate of interest
+    o Long  loanamount
+    o Integer  loantenure   //in days
+    o DateTime  disbdate
+}
+//Linking of a beneficiary to a program
+event Programmecreated{
+  o String message
+  --> Bankprogramme bankprogramme
+}

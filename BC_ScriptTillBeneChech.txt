@@ -1,0 +1,123 @@
+/**
+ * @param {com.ett.blockchain.Programmeben} pgben
+ * @transaction
+ */
+
+ function Programmeben(pgben)
+ { 
+  var benematch = 0;
+  pgben.bankprogramme.benificiary = pgben.benificiary;
+ 
+  var benific;
+  var trans1;
+  var transactions1 = [];
+  var value1=0;
+  var benificiaries=[];
+   
+  var query1 = buildQuery('SELECT com.ett.blockchain.Programmeben WHERE (benificiary == _$benificiary AND bankprogramme == _$bap) ');
+  
+ 
+  console.log("Beneficiary " +pgben.benificiary.customerid);
+  console.log("Program " +pgben.bankprogramme.programmeid);
+  
+  return  query('query1',{benificiary: 'resource:com.ett.blockchain.Benificiary#'+pgben.benificiary.customerid,bap: 'resource:com.ett.blockchain.Bankprogramme#'+pgben.bankprogramme.programmeid})
+
+  .then(function (transactions1) {
+	  for(int i=1;i<transactions1.length;i++){
+		  value1=1;
+		console.log("transact bene val " + transactions1.benificiary);
+        console.log("transact roi val " + transactions1.roi);
+        console.log("transact prog val " + transactions1.bankprogramme);
+		
+	  }
+  });
+      if(value1 = 1){
+	   console.log("Inside transaction");
+       throw Error("Transaction already exist for "+ pgben.benificiary.customerid +" and "  +pgben.bankprogramme.programmeid );
+	}
+	else {
+	   return getParticipantRegistry('com.ett.blockchain.Benificiary')
+      .then(function (participantRegistry) {
+  
+      console.log("Inside function 1 "+ JSON.stringify(participantRegistry.getAll()));
+      return participantRegistry.getAll();
+	
+      }).then(function (benificiaries) {
+    
+         console.log("Inside function 2 Iterate beneficiaries "+ benificiaries);
+         benificiaries.forEach(function (benific) {
+         console.log( "list of beneficiaries : "+ benific.customerid);
+	  
+	     if(benific.customerid == pgben.benificiary.customerid )
+         {
+           benematch = 1;
+           console.log("Value of benematch "+benematch);
+           console.log("Input "+ pgben.benificiary.customerid +"matched with one of the participant"+benific.customerid);
+         }
+		 console.log("bene match inside function "+benematch);
+	    });
+         if(benematch == 0) 
+		 {
+           console.log("Not a beneficiary");
+           throw Error("Not a beneficiary");
+         }
+    
+   if(benematch == 1) {
+        console.log("Inside validation condition ");
+   if(pgben.benificiary.customerid == "TATA"  && pgben.roi > 12)
+    {
+      
+        throw Error("For TATA roi cannot be more than 12%");
+   
+    }
+   else if(pgben.benificiary.customerid == "MRF"  && pgben.loanamount  > 10000000)
+    {
+        
+        throw Error("For MRF Loan Amount cannot be more than 1 Crore");
+   
+    }
+  else if(pgben.benificiary.customerid == "TVS"  && pgben.loanamount  > 5000000)
+    {
+      
+        throw Error("For MRF Loan Amount cannot be more than 50 Lakhs");
+  
+    }
+   else if(pgben.benificiary.customerid == "TOYOTA"  && pgben.roi > 11)
+    {
+        throw Error("For TOYOTA roi cannot be more than 11%");
+    } 
+
+   else if(date1.getDay() == 0)
+    {
+       throw Error("Disbursement Date can not be Sunday");
+    }
+   else {
+         console.log("Inside else condition 4");
+    return getAssetRegistry('com.ett.blockchain.Bankprogramme')
+        .then(function (assetRegistry) {
+            return assetRegistry.update(pgben.bankprogramme);
+     });
+   }
+   }
+	  
+    });
+
+ }
+ }
+/**
+ * display using console.log the properties of each property in the inbound object
+ * @param {displayObjectProperties} _string - string name of object
+ * @param {displayObjectProperties}  _object - the object to be parsed
+ * @utility
+ */
+function displayObjectValues (_string, _object)
+{
+    for (var prop in _object){
+        console.log(_string+'-->'+prop+':\t '+(((typeof(_object[prop]) === 'object') || (typeof(_object[prop]) === 'function'))  ? typeof(_object[prop]) : _object[prop]));
+    }
+}
+
+
+
+
+  
